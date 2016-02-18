@@ -7,14 +7,16 @@
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body ng-controller="MyController">
-    <p>
+    <p ng-hide="contractors.length === 0">
     Search:
     <input type="text" ng-model="searchable.name">
     </p>
     <form ng-submit="getContractor()">
-      <input type="text" ng-model="name" placeholder="Name">
-      <input type="text" ng-model="rate" placeholder="Rate">
-      <input type="submit" value="Add">
+      <input type="text" ng-model="name" ng-hide="contractors.length === 0" placeholder="Name">
+      <input type="text" ng-model="rate" ng-hide="contractors.length === 0" placeholder="Rate">
+      <input type="submit" ng-hide="contractors.length > 1" value="Add">
+      <input type="submit" ng-hide="contractors.length <= 1 || contractors.length > 3" value="Add another">
+      <input type="submit" ng-show="contractors.length > 3" value="Really?">
     </form>
     <p>
       <div ng-repeat="contractor in contractors | filter:searchable">
@@ -23,7 +25,7 @@
         <div ng-show="contractor.rate > 100">
           This rate is high!
         </div>
-        <hr>
+        <hr ng-hide="contractors.length <= 1">
       </div>
     </p>
   </body>
