@@ -2,18 +2,29 @@
 <html ng-app="ben">
   <head>
     <meta charset="utf-8">
-    <title>My first angular app</title>
+    <title>Contractors</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body ng-controller="MyController">
-    <input type="text" ng-model="mirror" placeholder="Enter your name">
     <p>
-      {{mirror}}
+    Search:
+    <input type="text" ng-model="searchable.name">
     </p>
-    <input type="text" ng-model="mirror2" placeholder="Enter your name">
+    <form ng-submit="getContractor()">
+      <input type="text" ng-model="name" placeholder="Name">
+      <input type="text" ng-model="rate" placeholder="Rate">
+      <input type="submit" value="Add">
+    </form>
     <p>
-      {{mirror2 | uppercase}}
+      <div ng-repeat="contractor in contractors | filter:searchable">
+        <p>{{contractor.name}}</p>
+        <p>{{contractor.rate | currency}}</p>
+        <div ng-show="contractor.rate > 100">
+          This rate is high!
+        </div>
+        <hr>
+      </div>
     </p>
   </body>
 </html>
